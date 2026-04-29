@@ -1,0 +1,8 @@
+# AutoHotkey
+*.exe
+*.log
+
+# Windows
+Thumbs.db
+Desktop.ini
+.DS_Store
