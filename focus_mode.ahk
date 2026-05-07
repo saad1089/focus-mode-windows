@@ -9,6 +9,9 @@ FOCUS_INTERVAL_MS := 7200000
 global temporaryColorTimerActive := false
 global autoCycleTimer := "" ; Will store the Timer object for the 2-hour cycle
 
+; Explicitly ensure this is false on script start for robustness
+temporaryColorTimerActive := false
+
 ; Function to get the current state of the color filter from the registry
 ; Returns 1 if enabled (grayscale), 0 if disabled (color)
 GetGrayscaleState() {
