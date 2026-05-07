@@ -1,4 +1,5 @@
 #Requires AutoHotkey v2.0
+#SingleInstance Force ; Prevents multiple instances from running
 
 ; Configuration
 ; FOCUS_INTERVAL_MS: The interval in milliseconds for the automatic grayscale toggle. Default is 2 hours (7,200,000 ms).
@@ -40,6 +41,7 @@ ToggleGrayscale() {
 ; Wait a few seconds to ensure Windows Shell is ready
 Sleep 3000
 EnsureGrayscaleOn()
+TrayTip "Focus Mode Started", "Grayscale is now active.", 1
 
 ; --- Hotkey: Temporary Color Mode (Ctrl + Alt + Shift + C) ---
 ^!+c::
@@ -69,7 +71,7 @@ EnsureGrayscaleOn()
 
     ; Disable grayscale (Switch to color)
     EnsureGrayscaleOff()
-    MsgBox("Color mode enabled for " minutes " minutes.", "Focus Mode", "T3") ; Auto-closes after 3 seconds
+    TrayTip "Color Mode Active", "Reverting to grayscale in " minutes " minutes.", 1
 
     temporaryColorTimerActive := true
 
@@ -80,12 +82,9 @@ EnsureGrayscaleOn()
 ReEnableGrayscale() {
     global temporaryColorTimerActive
     EnsureGrayscaleOn()
-    MsgBox("Grayscale mode re-enabled.", "Focus Mode", "T3")
+    TrayTip "Focus Mode", "Grayscale mode re-enabled.", 1
     temporaryColorTimerActive := false
 }
 
 ; --- Automatic 2-hour Cycle ---
-; This will toggle the state every 2 hours.
-; If it was ON, it goes OFF. If it was OFF, it goes ON.
 SetTimer(ToggleGrayscale, FOCUS_INTERVAL_MS)
-
